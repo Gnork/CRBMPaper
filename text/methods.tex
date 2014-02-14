@@ -1,1 +1,19 @@
 \section{Methoden}\label{methods}
+In diesem Abschnitt wird die Funktionsweise von CRBMs beschrieben.
+Grundlegendes Wissen über RBMs wird dabei vorausgesetzt.
+
+\subsection{Convolutional RBM}\label{CRBM}
+Die Convolutional RBM erweitert die normale RBM um die Möglichkeit kleine lokal auftretende Features in einem Bild zu erlernen.
+Dieses Vorgehen entspricht einer Faltung wie sie in der Bildanalyse üblich ist.
+Dabei besteht die CRBM aus mehreren kleinen RBMs, von denen jede jeweils einen Filter repräsentiert.
+Die Größe der Filter wird zu Beginn definiert und anschließend jeder Filter mit zufälligen Werten initialisiert.
+Diese Werte entsprechen den Weights zwischen den Neuronen der RBM und ein drei mal drei Pixel großer Filter entspricht dabei einer RBM mit neun Eingangsneuronen und einem Ausgangsneuron.
+Jedes Bild wird mit jedem Filter gefaltet.
+Dabei wird der Filter über das Bild pixelweise verschoben und die Filterantworten in eine Feature-Map geschrieben.
+Für jedes Bild werden so viele Feature-Maps angelegt, wie es Filter gibt.
+Die Filter-Maps sind anschließend so breit und hoch wie es Verschiebungen in x- und y-Richtung über das Bild gab.
+
+\textit{Training:}
+Da die Filter zufällig initialisiert wurden müssen sie schrittweise in einem Trainingsprozess verbessert werden, um sinnvolle Features im Bild zu erkennen.
+Gut trainierte Filter, sollen sich möglichst voneinander unterscheiden und die Wirkung eines Kantenfilters haben.
+Somit würden verschiedene Filter auch verschiedenartige Kanten in einem Bild finden.
