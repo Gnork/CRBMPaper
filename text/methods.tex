@@ -17,3 +17,13 @@ Die Filter-Maps sind anschließend so breit und hoch wie es Verschiebungen in x-
 Da die Filter zufällig initialisiert wurden müssen sie schrittweise in einem Trainingsprozess verbessert werden, um sinnvolle Features im Bild zu erkennen.
 Gut trainierte Filter, sollen sich möglichst voneinander unterscheiden und die Wirkung eines Kantenfilters haben.
 Somit würden verschiedene Filter auch verschiedenartige Kanten in einem Bild finden.
+Der Trainingsprozess selbst besteht aus drei Schritten.
+Zunächst werden die Filter auf das Originalbild angewandt.
+Die Filterantworten dienen dabei als Aktivierungsenergie für die Neuronen.
+Diese Aktivierungsenergie wird mit Hilfe einer Logistikfunktion in eine Wahrscheinlichkeit umgerechnet, anhand derer das Neuron aktiviert oder nicht aktiviert wird.
+Das Ergebnis sind die fertigen Feature-Maps.
+Um das Ergebnis zu überprüfen werden Rekonstruktionen erzeugt, indem die Feature-Maps mit einem horizontal und vertikal gespiegelten Filter erneut gefaltet werden.
+Für jedes Bild werden die Rekonstruktionsergebnisse der einzelnen Filter summiert.
+%TODO
+
+\textit{Max-Pooling:}
