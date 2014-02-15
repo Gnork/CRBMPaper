@@ -27,3 +27,7 @@ Für jedes Bild werden die Rekonstruktionsergebnisse der einzelnen Filter summie
 %TODO
 
 \textit{Max-Pooling:}
+Beim Max-Pooling handelt es sich um eine Technik der Unterabtastung, die die jeweilige Feature-Map in Regionen mit einer festgelegten Gittergröße gliedert. 
+Dabei wird nur der maximale Wert der aktuellen Region übernommen.
+So werden die Ergebnisdaten um den Faktor der Gittergröße reduziert und somit nur die maximalen Ausschläge der gelernten Filter in der gespeichert.
+Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarianz korrelierend zur Gittergröße des Max-Poolings, denn durch die eingestellte Gittergröße des Max-Poolings geht die Information verloren, wo genau der bestimmte Filter innerhalb der sich ergebenden Region angeschlagen hat, da für jede Region nur ein Maximalwert errechnet wird.
