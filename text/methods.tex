@@ -31,3 +31,8 @@ Beim Max-Pooling handelt es sich um eine Technik der Unterabtastung, die die jew
 Dabei wird nur der maximale Wert der aktuellen Region übernommen.
 So werden die Ergebnisdaten um den Faktor der Gittergröße reduziert und somit nur die maximalen Ausschläge der gelernten Filter in der gespeichert.
 Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarianz korrelierend zur Gittergröße des Max-Poolings, denn durch die eingestellte Gittergröße des Max-Poolings geht die Information verloren, wo genau der bestimmte Filter innerhalb der sich ergebenden Region angeschlagen hat, da für jede Region nur ein Maximalwert errechnet wird.
+
+\textit{Kaskadierung:}
+Um die Translationsinvarianz zu erhöhen und die Featurefilter weiter auf komplexere, signifikante und wieder auftretende Strukturen die auch als spezifische Merkmale von Objekten betrachtet werden können, zu reduzieren, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM gegeben werden. 
+Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen.
+So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung bestehen.
