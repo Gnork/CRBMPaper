@@ -50,7 +50,9 @@ In dem dargestellten Beispiel liegt die Regionsgröße auf $2 \cdot 2$ und so en
 Um die Translationsinvarianz zu erhöhen und die Featurefilter weiter auf komplexere, signifikante und wieder auftretende Strukturen zu reduzieren, die auch als spezifische Merkmale von Objekten betrachtet werden können, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM gegeben werden. 
 Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen.
 So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung bestehen.\newline
-\begin{figure}[!htbp]
-		\includegraphics{images/stack.jpg}
-		\caption{CRBM-Kaskade \cite{Norouzi09}}
-\end{figure}
+\begin{figure*}[]
+                \centering
+                \includegraphics[width=2.0\columnwidth]{images/stack.jpg}
+                \caption{CRBM-Kaskade \cite{Norouzi09}}
+                \label{cascade}
+\end{figure*}
