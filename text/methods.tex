@@ -30,9 +30,27 @@ Für jedes Bild werden die Rekonstruktionsergebnisse der einzelnen Filter summie
 Beim Max-Pooling handelt es sich um eine Technik der Unterabtastung, die die jeweilige Feature-Map in Regionen mit einer festgelegten Gittergröße gliedert. 
 Dabei wird nur der maximale Wert der aktuellen Region übernommen.
 So werden die Ergebnisdaten um den Faktor der Gittergröße reduziert und somit nur die maximalen Ausschläge der gelernten Filter in der gespeichert.
-Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarianz korrelierend zur Gittergröße des Max-Poolings, denn durch die eingestellte Gittergröße des Max-Poolings geht die Information verloren, wo genau der bestimmte Filter innerhalb der sich ergebenden Region angeschlagen hat, da für jede Region nur ein Maximalwert errechnet wird.
+Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarianz korrelierend zur Gittergröße des Max-Poolings, denn durch die eingestellte Gittergröße des Max-Poolings geht die Information verloren, wo genau der bestimmte Filter innerhalb der sich ergebenden Region angeschlagen hat, da für jede Region nur ein Maximalwert errechnet wird.\newline
+\begin{equation*}
+\begin{matrix}
+ 0 & 0 & 6 & 4 \\
+ 0 & 1 & 7 & 3 \\
+ 1 & 2 & 5 & 1 \\
+ 0 & 0 & 3 & 0
+\end{matrix} =
+\begin{matrix}
+ 1 & 7 \\
+ 2 & 5  
+\end{matrix}
+\end{equation*}
+In dem dargestellten Beispiel liegt die Regionsgröße auf $2 \cdot 2$ und so entsteht aus der $4 \cdot 4$ eine $2 \cdot 2$ Feature-Map, als Ergebnis.  
+
 
 \textit{Kaskadierung:}
-Um die Translationsinvarianz zu erhöhen und die Featurefilter weiter auf komplexere, signifikante und wieder auftretende Strukturen die auch als spezifische Merkmale von Objekten betrachtet werden können, zu reduzieren, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM gegeben werden. 
+Um die Translationsinvarianz zu erhöhen und die Featurefilter weiter auf komplexere, signifikante und wieder auftretende Strukturen zu reduzieren, die auch als spezifische Merkmale von Objekten betrachtet werden können, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM gegeben werden. 
 Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen.
-So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung bestehen.
+So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung bestehen.\newline
+\begin{figure}[!htbp]
+		\includegraphics{images/stack.jpg}
+		\caption{CRBM-Kaskade \cite{Norouzi09}}
+\end{figure}
