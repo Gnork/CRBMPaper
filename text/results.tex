@@ -1,13 +1,13 @@
 \section{Ergebnisse}\label{results}
-Für die Klassifizierung von 1000 ausgesuchten handgeschriebenen Ziffern aus dem MNIST-Set (100 Variationen jeder einzelnen Ziffer) wurden diese vorerst von $28 \cdot 28$ auf eine Größe von $32 \cdot 32$ erweitert (Zero-Padding). Das Training der CRBM erfolgte über 20 Epochen mit einer Learning Rate von 0.01. Die Anzahl der Feature-Maps wurde dabei für beide Kaskaden auf 15 festgelegt.
+Für die Klassifizierung von 1000 ausgesuchten handgeschriebenen Ziffern aus dem MNIST-Set (100 Variationen jeder einzelnen Ziffer) wurden diese vorerst von $28 \cdot 28$ auf eine Größe von $32 \cdot 32$ Pixel erweitert (Zero-Padding). Das Training der CRBM erfolgte über 20 Epochen mit einer Learning Rate von 0.01. Die Anzahl der Feature-Maps wurde dabei für beide Kaskaden auf 15 festgelegt.
 Nach jeder Kaskade erfolgte ein Max-Pooling. 
 \newline 
 
 \textit{Beispielablauf eines Trainings:}
 Aus den Filterantworten der ersten Kaskade der CRBM resultiert eine Bildgröße von $28 \cdot 28$, da hier mit einem $5 \cdot 5$ Kernel gefaltet wurde, nach einem $4 \cdot 4$ Max-Pooling sind die Feature Maps nur noch $7 \cdot 7$ groß. Eine zweite Kaskade mit einem  $5 \cdot 5$ Kernel führt dann in der Faltungseinheit zu einer Bildgröße von $3 \cdot 3$, durch ein weiteres MaxPooling ($3 \cdot 3$) resultiert am Ende eine $1 \cdot 1$ Matrix, für jede Feature Map. Die $1 \cdot 1$ Feature Maps eines Bildes, wird dann als ihr Feature Vektoren interpretiert.
 
-Für das nachfolgende Clustering wurde der jeweilige Ziffername der Zahl mit dem sich ergebenden Featurevektor aus der Kaskade verknüpft. Durch den Mittelwert, der jeweiligen Dimension wurde der Mittelpunkt des jeweiligen Ziffernclusters ermittelt.
-Mit einem zweiten gelabelten Datenset von 1000 Ziffern des MNIST-Sets, welches nicht Bestandteil des Trainings war, wurde nun der neue Ergebnisvektor mittels euklidischer Distanz zu den jeweiligen Clustermittelpunkten abgeglichen, ob sich die jeweilige Ziffer in dem dazugehörigen Cluster befand.
+Für das nachfolgende Clustering wurde der Name der Ziffer als Label mit dem sich ergebenden Featurevektor aus der Kaskade verknüpft. Durch den Mittelwert, der jeweiligen Dimension wurde der Mittelpunkt des jeweiligen Ziffernclusters ermittelt.
+Mit einem zweiten gelabelten Datenset von 1000 Ziffern des MNIST-Sets, welches nicht Bestandteil des Trainings war, wurde nun der neue Ergebnisvektor mittels euklidischer Distanz zu den jeweiligen Clustermittelpunkten abgeglichen. Jede Ziffer wurde ihrem nächstgelegenen Cluster zugeordnet und anschließend überprüft, ob das Cluster dem tatsächlichen Label der Ziffer entspricht.\newline
 
 \textit{Test 1:}
 \begin{itemize}
