@@ -1,7 +1,7 @@
 \section{Implementierung}\label{implementation}
 Die Implementierung der CRBM wurde in Java 7 realisiert.
 Die folgenden Methodenbeschreibungen beziehen sich auf die angelegte Klasse namens CRBM und nachfolgend das Clustering zur Klassifizierung.
-\textit{CRBM:}
+\subsection{CRBM}
 Der Kern der Klasse CRBM ist die Trainingsmethode, welche die jedes Bild als eindimensionalen Datenvektor annimmt. Des weiteren werden Lernrate und die Anzahl der Durchgänge des Trainings als Epochen in der Parameterliste übergeben.
 Die Anzahl der Feature-Maps $K$, die Kernel $W_k$ und deren Größe und die Seitenlänge der eingehenden Bilder werden bei der Instanziierung im Konstruktor festgelegt, dabei ist zu beachten, das nur quadratische Bilder verarbeitet werden können. Gleichzeitig werden die Kernel mittels einer Normalverteilung zufällig initialisiert.
 Der Trainingsprozess lässt sich dabei in 4 Teile gliedern. Einmal das Errechnen der $K$-Feature-Maps als Hidden-Probabilities, der $K$-positiven Gradienten und der Hidden-States.
@@ -39,7 +39,7 @@ for (int k = 0; k < K; k++) {
 }
 \end{lstlisting}
 
-\textit{Cluster:}
+\subsection{Clustering}
 Da zur Klassifizierung Untermengen des MNIST-Set benutzt werden und jede Ziffer im Dateinamen bereits gelabelt wurde, ist von Vorteil den resultierenden Featurevektor eines Bildes mit dem Ziffernname des Dateinamen zu verknüpfen.
 Die jeweiligen Clusterzentren werden aus dem Durchschnitt der jeweils gelabelten Vektordimensionen ermittelt.
 \begin{lstlisting}

@@ -54,8 +54,8 @@ Dieser Schritt nennt sich "`Contrastive Divergence"'.
 \subsection{Max-Pooling}
 Beim Max-Pooling handelt es sich um eine Technik der Unterabtastung, die die jeweilige Feature-Map in Regionen mit einer festgelegten Gittergröße gliedert. 
 Dabei wird nur der maximale Wert der aktuellen Region übernommen.
-So werden die Ergebnisdaten um den Faktor der Gittergröße reduziert und somit nur die maximalen Ausschläge der gelernten Filter in der gespeichert.
-Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarianz korrelierend zur Gittergröße des Max-Poolings, denn durch die eingestellte Gittergröße des Max-Poolings geht die Information verloren, wo genau der bestimmte Filter innerhalb der sich ergebenden Region angeschlagen hat, da für jede Region nur ein Maximalwert errechnet wird.\newline
+So werden die Ergebnisdaten um den Faktor der Gittergröße reduziert und nur die maximalen Ausschläge der gelernten Filter in der Feature-Map gespeichert.
+Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarianz korrelierend zur Gittergröße des Max-Poolings. Durch die eingestellte Gittergröße des Max-Poolings geht die Information verloren, an welcher Stelle innerhalb des Pooling-Fensters der jeweilige Filter den Maximalwert ausgelöst hat.\newline
 \begin{equation*}
 \begin{matrix}
  0 & 0 & 6 & 4 \\
@@ -68,12 +68,13 @@ Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarian
  2 & 5  
 \end{matrix}
 \end{equation*}
-In dem dargestellten Beispiel liegt die Regionsgröße auf $2 \cdot 2$ und so entsteht aus der $4 \cdot 4$ eine $2 \cdot 2$ Feature-Map, als Ergebnis.  
+In dem dargestellten Beispiel liegt die Regionsgröße auf $2 \cdot 2$. Aus der $4 \cdot 4$ Pixel großen Feature-Map entsteht ein $2 \cdot 2$ Pixel großes Ergebnis.  
 
 
 \subsection{Kaskadierung}
-Um die Translationsinvarianz zu erhöhen und die Feature Maps weiter auf signifikante und wieder auftretende Strukturen zu reduzieren, die auch als spezifische Merkmale von Objekten betrachtet werden können, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM übergegeben werden. 
-Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen\ref{cascade}. In einem klassischen Convolutional Neural Network werden allerdings nur 2 Filterungseinheiten und 2 Max Pooling Einheiten verwendet. So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung besteht.\newline In der letzten Kaskade sind die unterabgetasteten Feature-Maps nur noch $1 \cdot 1$ Pixel groß. Dann lassen sie sich jeweils als ein Feature Vektor eines bestimmten Bildes interpretieren.\newline
+Um die Translationsinvarianz zu erhöhen und die Feature Maps weiter auf signifikante und wieder auftretende Strukturen zu reduzieren, können die Ergebnisse des Max-Pooling in weiteren CRBMs verarbeitet werden. 
+Der Vorgang der Filterung mit anschließendem Max-Pooling kann so lange wiederholt werden, bis die Bilddaten zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen\ref{cascade}. In einem klassischen Convolutional Neural Network werden allerdings nur 2 Filterungs- und Max-Pooling-Einheiten verwendet.
+In der letzten Kaskade sind die unterabgetasteten Feature-Maps nur noch $1 \cdot 1$ Pixel groß. Dann lassen sie sich jeweils als ein Feature Vektor eines bestimmten Bildes interpretieren.\newline
 \begin{figure*}[]
                 \centering
                 \includegraphics[width=2.0\columnwidth]{images/stack.jpg}
