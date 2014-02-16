@@ -1,12 +1,37 @@
 \section{Implementierung}\label{implementation}
 Die Implementierung der CRBM wurde in Java 7 realisiert.
-\newline
-\newline 
+Die folgenden Methodenbeschreibungen beziehen sich auf die angelegte Klasse namens CRBM und nachfolgend das Clustering zur Klassifizierung.
+Der Kern der Klasse CRBM ist die Trainingsmethode, welche die jedes Bild als eindimensionalen Datenvektor annimmt. Des weiteren werden Lernrate und die Anzahl der Durchgänge des Trainings als Epochen in der Parameterliste übergeben.
+Die Anzahl der Feature-Maps $K$, die Kernel $W_k$ und deren Größe und die Seitenlänge der eingehenden Bilder werden bei der Instanziierung im Konstruktor festgelegt, dabei ist zu beachten, das nur quadratische Bilder verarbeitet werden können. Gleichzeitig werden die Kernel mittels einer Normalverteilung zufällig initialisiert.
+Der Trainingsprozess lässt sich dabei in 4 Teile gliedern. Einmal das Errechnen der $K$-Feature-Maps als Hidden-Probabilities, der $K$-positiven Gradienten und der Hidden-States.
 \begin{lstlisting}
 for (int k = 0; k < K; k++) {
-	PH0[k] = convolution(V0, W[k]);
-	PH0[k] = logistic(PH0[k]);
-	Grad0[k] = convolution(V0, PH0[k]);
-	H0[k] = bernoulli(PH0[k]);
+  PH0[i][k] = convolution(V0[i], W3D[k]);
+  PH0[i][k] = logistic(PH0[i][k]);
+  H0[i][k] = bernoulli(PH0[i][k]);
+  Grad0[i][k] = convolution(V0[i], PH0[i][k]);
+}
+\end{lstlisting}
+Nachfolgend das Rückrechnen des jeweiligen Bildes durch die an beiden Achsen gespiegelten $K$-Kernel der entstandenen Feature-Maps. Dabei werden bei der Methode $add(array1, array2)$ die so entstandenen $K$ Resultate auf $v1m$ summiert.
+\begin{lstlisting}
+for (int k = 0; k < W1.length; k++) {
+  float[] r = convolution(data[k], W1[k]);
+  add(v1m, r);
+}
+\end{lstlisting}
+Da $V1m$ durch die doppelte Faltung kleiner ist, wird der Rand des ursprünglichen Bildes hinzugefügt.
+\begin{lstlisting}
+V1[i] = concatenate(V0[i], V1m[i]);
+\end{lstlisting}
+Der letzte Schritt ist die Berechnung der negativen Probabilities und die aus der Faltung mit dem rekonstruierten Bild entstehenden negativen Gradienten. In diesem Schritt erfolgt mitunter auch durch die Contrastive Divergence die Aktualisierung des $k$-ten Kernels.
+\begin{lstlisting}
+for (int k = 0; k < K; k++) {
+  PH1[i][k] = convolution(V1[i], W[k]);
+  PH1[i][k] = logistic(PH1[i][k]);
+  Grad1[i][k] = convolution(V1[i], PH1[i][k]);
+
+  for(int h = 0; h < W[0].length; h++) {
+    W[k][h] = W[k][h] + learningRate * (Grad0[i][k][h] - Grad1[i][k][h]);
+  }
 }
 \end{lstlisting}
