@@ -1,1 +1,8 @@
 \section{Ergebnisse}\label{results}
+
+Für die Klassifizierung von 1000 ausgesuchten handgeschriebenen Ziffern aus dem MNIST-Set (100 Variationen jeder einzelnen Ziffer) wurde für die erste Kaskade die erste Kaskade einer CRBM verwendet. Das Training dieser CRBM erfolgte über 100 Epochen mit einer Learning Rate von 0.1. Die Anzahl der Freature-Maps wurde dabei auf 15 festgelegt und Filterkernel/Weights auf eine Größe von $5 \cdot 5$ gesetzt.
+Danach erfolgte ein $2 \cdot 2$ Max-Pooling. Für die letzte Kaskade wurde eine RBM gewählt. Die Größe eines Ein Input Vektors dieser RBM entsprach der Anzahl der unterabgetasteten Feature-Maps eines Bildes mal der Fläche einer solchen Feature Map. 
+Dieser Vektor entspricht damit der Information eines berechneten Bildes, welches in der CRBM prozessiert wurde. Für den Hiddenlayer der RBM wurde eine feste Vektorgröße von 100 gewählt.
+\newline 
+Für das nachfolgende Clustering wurde die jeweilige Ziffername der Zahl mit dem sich ergebenden Featurevektor aus der Kaskade verknüpft. Durch den Mittelwert, der jeweiligen Dimension wurde der Mittelpunkt des jeweiligen Ziffernclusters ermittelt.
+Mit einem zweiten gelabelten Datenset von 1000 Ziffern des MNIST-Sets, welches nicht Bestandteil des Trainings war, wurde nun der neue Ergebnisvektor mittels euklidischer Distanz zu den jeweiligen Clustermittelpunkten abgeglichen, ob sich die jeweilige Ziffer in dem dazugehörigen Cluster befand.
