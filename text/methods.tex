@@ -18,13 +18,38 @@ Da die Filter zufällig initialisiert wurden müssen sie schrittweise in einem T
 Gut trainierte Filter, sollen sich möglichst voneinander unterscheiden und die Wirkung eines Kantenfilters haben.
 Somit würden verschiedene Filter auch verschiedenartige Kanten in einem Bild finden.
 Der Trainingsprozess selbst besteht aus drei Schritten.
-Zunächst werden die Filter auf das Originalbild angewandt.
+Zunächst werden die Filter (H) auf das Originalbild (I) angewandt und das Ergebnis jedes Filters separat in einer vorläufigen Feature-Map (R) gespeichert.
+\begin{equation*}
+I * H = R
+\end{equation*}
 Die Filterantworten dienen dabei als Aktivierungsenergie für die Neuronen.
 Diese Aktivierungsenergie wird mit Hilfe einer Logistikfunktion in eine Wahrscheinlichkeit umgerechnet, anhand derer das Neuron aktiviert oder nicht aktiviert wird.
 Das Ergebnis sind die fertigen Feature-Maps.
-Um das Ergebnis zu überprüfen werden Rekonstruktionen erzeugt, indem die Feature-Maps mit einem horizontal und vertikal gespiegelten Filter erneut gefaltet werden.
-Für jedes Bild werden die Rekonstruktionsergebnisse der einzelnen Filter summiert.
-%TODO
+Um das Ergebnis zu überprüfen werden Rekonstruktionen erzeugt, indem die Feature-Maps mit einem horizontal und vertikal gespiegelten Filter (fH) erneut gefaltet werden.
+\begin{equation*}
+R * fH = I'
+\end{equation*}
+Auf die so rekonstruierten Bilder (I'), werden die Faltungen (H) wieder angewandt, um anschließend die Ergebnisse der rekonstruierten Daten (R') mit den Ergebnissen der Originaldaten (R) zu vergleichen.
+\begin{equation*}
+I' * H = R'
+\end{equation*}
+Das Ergebnis aus dem ersten Schritt (R) wird als Filter auf das Bild (I) und das Ergebnis des letzten Schritts (R') auf die rekonstruierten Daten angewandt.
+\begin{equation*}
+I * R = C
+\end{equation*}
+\begin{equation*}
+I' * R' = C'
+\end{equation*}
+Die Ergebnisse (C und C') werden subtrahiert und bilden damit den Rekonstruktionsfehler (E).
+\begin{equation*}
+C - C' = E
+\end{equation*}
+Der Fehler (E) wird auf den Original-Filter (H) addiert, um ihn zu verbessern.
+In der nächsten Epoche wird dann der aktualisierte Filter (H') verwendet.
+\begin{equation*}
+H + E = H'
+\end{equation*}
+Dieser Schritt nennt sich "`Contrastive Divergence"'.
 
 \textit{Max-Pooling:}
 Beim Max-Pooling handelt es sich um eine Technik der Unterabtastung, die die jeweilige Feature-Map in Regionen mit einer festgelegten Gittergröße gliedert. 
