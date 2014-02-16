@@ -11,40 +11,40 @@ Diese Werte entsprechen den Weights zwischen den Neuronen der RBM und ein drei m
 Jedes Bild wird mit jedem Filter gefaltet.
 Dabei wird der Filter über das Bild pixelweise verschoben und die Filterantworten in eine Feature-Map geschrieben.
 Für jedes Bild werden so viele Feature-Maps angelegt, wie es Filter gibt.
-Die Filter-Maps sind anschließend so breit und hoch wie es Verschiebungen in x- und y-Richtung über das Bild gab.
+Die Filter-Maps sind anschließend so breit und hoch wie es Verschiebungen in x- und y-Richtung über das Bild möglich sind.
 
 \textit{Training:}
 Da die Filter zufällig initialisiert wurden müssen sie schrittweise in einem Trainingsprozess verbessert werden, um sinnvolle Features im Bild zu erkennen.
 Gut trainierte Filter, sollen sich möglichst voneinander unterscheiden und die Wirkung eines Kantenfilters haben.
 Somit würden verschiedene Filter auch verschiedenartige Kanten in einem Bild finden.
 Der Trainingsprozess selbst besteht aus drei Schritten.
-Zunächst werden die Filter (H) auf das Originalbild (I) angewandt und das Ergebnis jedes Filters separat in einer vorläufigen Feature-Map (R) gespeichert.
+Zunächst werden die Filter $H$ auf das Originalbild $I$ angewandt und das Ergebnis jedes Filters separat in einer vorläufigen Feature-Map $R$ gespeichert.
 \begin{equation*}
 I * H = R
 \end{equation*}
 Die Filterantworten dienen dabei als Aktivierungsenergie für die Neuronen.
 Diese Aktivierungsenergie wird mit Hilfe einer Logistikfunktion in eine Wahrscheinlichkeit umgerechnet, anhand derer das Neuron aktiviert oder nicht aktiviert wird.
 Das Ergebnis sind die fertigen Feature-Maps.
-Um das Ergebnis zu überprüfen werden Rekonstruktionen erzeugt, indem die Feature-Maps mit einem horizontal und vertikal gespiegelten Filter (fH) erneut gefaltet werden.
+Um das Ergebnis zu überprüfen werden Rekonstruktionen erzeugt, indem die Feature-Maps mit einem horizontal und vertikal gespiegelten Filter $fH$ erneut gefaltet werden.
 \begin{equation*}
 R * fH = I'
 \end{equation*}
-Auf die so rekonstruierten Bilder (I'), werden die Faltungen (H) wieder angewandt, um anschließend die Ergebnisse der rekonstruierten Daten (R') mit den Ergebnissen der Originaldaten (R) zu vergleichen.
+Auf die so rekonstruierten Bilder $I'$, werden die Faltungen $H$ wieder angewandt, um anschließend die Ergebnisse der rekonstruierten Daten $R'$ mit den Ergebnissen der Originaldaten $R$ zu vergleichen.
 \begin{equation*}
 I' * H = R'
 \end{equation*}
-Das Ergebnis aus dem ersten Schritt (R) wird als Filter auf das Bild (I) und das Ergebnis des letzten Schritts (R') auf die rekonstruierten Daten angewandt.
+Das Ergebnis aus dem ersten Schritt $R$ wird als Filter auf das Bild $I$ und das Ergebnis des letzten Schritts $R'$ auf die rekonstruierten Daten angewandt.
 \begin{equation*}
 I * R = C
 \end{equation*}
 \begin{equation*}
 I' * R' = C'
 \end{equation*}
-Die Ergebnisse (C und C') werden subtrahiert und bilden damit den Rekonstruktionsfehler (E).
+Die Ergebnisse ($C$ und $C'$) werden subtrahiert und bilden damit den Rekonstruktionsfehler $E$.
 \begin{equation*}
 C - C' = E
 \end{equation*}
-Der Fehler (E) wird auf den Original-Filter (H) addiert, um ihn zu verbessern.
+Der Fehler $E$ wird auf den Original-Filter $H$ addiert, um ihn zu verbessern.
 In der nächsten Epoche wird dann der aktualisierte Filter (H') verwendet.
 \begin{equation*}
 H + E = H'
@@ -73,7 +73,7 @@ In dem dargestellten Beispiel liegt die Regionsgröße auf $2 \cdot 2$ und so en
 
 \subsection{Kaskadierung}
 Um die Translationsinvarianz zu erhöhen und die Feature Maps weiter auf signifikante und wieder auftretende Strukturen zu reduzieren, die auch als spezifische Merkmale von Objekten betrachtet werden können, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM übergegeben werden. 
-Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen\ref{cascade}. In einem klassischen Convolutional Neural Network werden allerdings nur 2 Filterungseinheiten und 2 Max Pooling Einheiten verwendet. So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung besteht.\newline In der letzten Kaskade sind die unterabgetasteten Feature Maps nur noch $1 \cdot 1$ Pixel groß. Dann lassen sie sich jeweils als ein Feature Vektor eines bestimmten Bildes interpretieren.\newline
+Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen\ref{cascade}. In einem klassischen Convolutional Neural Network werden allerdings nur 2 Filterungseinheiten und 2 Max Pooling Einheiten verwendet. So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung besteht.\newline In der letzten Kaskade sind die unterabgetasteten Feature-Maps nur noch $1 \cdot 1$ Pixel groß. Dann lassen sie sich jeweils als ein Feature Vektor eines bestimmten Bildes interpretieren.\newline
 \begin{figure*}[]
                 \centering
                 \includegraphics[width=2.0\columnwidth]{images/stack.jpg}

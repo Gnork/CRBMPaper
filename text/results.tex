@@ -3,7 +3,7 @@ Für die Klassifizierung von 1000 ausgesuchten handgeschriebenen Ziffern aus dem
 Danach erfolgte ein Max-Pooling. 
 \newline 
 
-Beispielhaftes Training
+\textit{Beispielhaftes Training:}
 Aus den Filterantworten der ersten Kaskade der CRBM resultiert eine Bildgröße von $28 \cdot 28$, da bei diesem Test mit einem $5 \cdot 5$ Filter gefaltet wurde, nach einem $4 \cdot 4$ Max-Pooling sind die Feature Maps nur noch $7 \cdot 7$ groß. Eine zweite Kaskade mit einem  $5 \cdot 5$ Kernel führt dann in der Faltungseinheit zu einer Bildgröße von $3 \cdot 3$, durch ein weiteres MaxPooling ($3 \cdot 3$) resultiert am Ende eine $1 \cdot 1$ Matrix, für jede Feature Map. Die Feature Maps aller Bilder, werden dann als ihre jeweiligen Vektoren interpretiert.
 
 Für das nachfolgende Clustering wurde die jeweilige Ziffername der Zahl mit dem sich ergebenden Featurevektor aus der Kaskade verknüpft. Durch den Mittelwert, der jeweiligen Dimension wurde der Mittelpunkt des jeweiligen Ziffernclusters ermittelt.
