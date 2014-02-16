@@ -51,7 +51,7 @@ H + E = H'
 \end{equation*}
 Dieser Schritt nennt sich "`Contrastive Divergence"'.
 
-\textit{Max-Pooling:}
+\subsection{Max-Pooling}
 Beim Max-Pooling handelt es sich um eine Technik der Unterabtastung, die die jeweilige Feature-Map in Regionen mit einer festgelegten Gittergröße gliedert. 
 Dabei wird nur der maximale Wert der aktuellen Region übernommen.
 So werden die Ergebnisdaten um den Faktor der Gittergröße reduziert und somit nur die maximalen Ausschläge der gelernten Filter in der gespeichert.
@@ -71,7 +71,7 @@ Es ergibt sich dadurch ein beabsichtigter Nebeneffekt einer Translationsinvarian
 In dem dargestellten Beispiel liegt die Regionsgröße auf $2 \cdot 2$ und so entsteht aus der $4 \cdot 4$ eine $2 \cdot 2$ Feature-Map, als Ergebnis.  
 
 
-\textit{Kaskadierung:}
+\subsection{Kaskadierung}
 Um die Translationsinvarianz zu erhöhen und die Featurefilter weiter auf komplexere, signifikante und wieder auftretende Strukturen zu reduzieren, die auch als spezifische Merkmale von Objekten betrachtet werden können, können die durch das Max-Pooling sich ergebenden Feature-Maps in eine weitere CRBM gegeben werden. 
 Der Vorgang der Filterung und des Max-Pooling kann so lange wiederholt werden bis die Datenflächen zu klein sind, um ein weiteres Falten oder Max-Pooling vorzunehmen.
 So entsteht eine Kaskade von Einheiten, die jeweils aus einer CRBM und der anschließenden Unterabtastung bestehen.\newline
