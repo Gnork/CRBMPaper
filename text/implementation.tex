@@ -38,5 +38,27 @@ for (int k = 0; k < K; k++) {
   }
 }
 \end{lstlisting}
-\newLine
-Da zur Klassifizierung Untermengen des MNIST-Set benutzt werden und jede Ziffer im Dateinamen gelabelt wurde. 
+
+\textit{Cluster:}
+Da zur Klassifizierung Untermengen des MNIST-Set benutzt werden und jede Ziffer im Dateinamen bereits gelabelt wurde, ist von Vorteil den resultierenden Featurevektor eines Bildes mit dem Ziffernname des Dateinamen zu verknüpfen.
+Die jeweiligen Clusterzentren werden aus dem Durchschnitt der jeweils gelabelten Vektordimensionen ermittelt.
+\begin{lstlisting}
+float[] center = new float[len];
+        
+for(float[] v : data){
+  for(int i = 0; i < v.length; ++i){
+    center[i] += v[i];
+  }
+}
+        
+for(int i = 0; i < len; ++i){
+  center[i] /= size;
+}
+\end{lstlisting}
+Um die Clusterzugehörigkeit eingehender Vektoren von Bilddaten, die nicht gelabelt wurden zu erfahren, wird der minimale euklidische Abstand als Klassifizierung verwendet.
+\begin{lstlisting}
+for(int i = 0; i < center.length; ++i){
+  sum += (center[i] - v[i]) * (center[i] - v[i]);
+}
+sum = Math.sqrt(sum);
+\end{lstlisting}
