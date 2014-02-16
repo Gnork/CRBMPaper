@@ -1,14 +1,74 @@
 \section{Ergebnisse}\label{results}
-Für die Klassifizierung von 1000 ausgesuchten handgeschriebenen Ziffern aus dem MNIST-Set (100 Variationen jeder einzelnen Ziffer) wurden diese vorerst von $28 \cdot 28$ auf eine Größe von $32 \cdot 32$ Pixel skaliert (Zero-Padding).
-Das Training der CRBM erfolgte über 100 Epochen mit einer Learning Rate von 0.1.
-Die Anzahl der Feature-Maps wurde dabei auf 15 festgelegt.
-Danach erfolgte ein Max-Pooling.
+Für die Klassifizierung von 1000 ausgesuchten handgeschriebenen Ziffern aus dem MNIST-Set (100 Variationen jeder einzelnen Ziffer) wurden diese vorerst von $28 \cdot 28$ auf eine Größe von $32 \cdot 32$ erweitert (Zero-Padding). Das Training der CRBM erfolgte über 20 Epochen mit einer Learning Rate von 0.01. Die Anzahl der Feature-Maps wurde dabei für beide Kaskaden auf 15 festgelegt.
+Nach jeder Kaskade erfolgte ein Max-Pooling. 
+\newline 
 
-\textit{Beispiel-Training:}
-Aus den Filterantworten der ersten Kaskade der CRBM resultiert eine Bildgröße von $28 \cdot 28$, da bei diesem Test mit einem $5 \cdot 5$ Filter gefaltet wurde, nach einem $4 \cdot 4$ Max-Pooling sind die Feature Maps nur noch $7 \cdot 7$ groß.
-Eine zweite Kaskade mit einem  $5 \cdot 5$ Kernel führt dann in der Faltungseinheit zu einer Bildgröße von $3 \cdot 3$, durch ein weiteres Max-Pooling ($3 \cdot 3$) resultiert am Ende eine $1 \cdot 1$ Matrix, für jede Feature Map.
-Die Feature Maps aller Bilder, werden dann als ihre jeweiligen Vektoren interpretiert.
+\textit{Beispielablauf eines Trainings:}
+Aus den Filterantworten der ersten Kaskade der CRBM resultiert eine Bildgröße von $28 \cdot 28$, da hier mit einem $5 \cdot 5$ Kernel gefaltet wurde, nach einem $4 \cdot 4$ Max-Pooling sind die Feature Maps nur noch $7 \cdot 7$ groß. Eine zweite Kaskade mit einem  $5 \cdot 5$ Kernel führt dann in der Faltungseinheit zu einer Bildgröße von $3 \cdot 3$, durch ein weiteres MaxPooling ($3 \cdot 3$) resultiert am Ende eine $1 \cdot 1$ Matrix, für jede Feature Map. Die $1 \cdot 1$ Feature Maps eines Bildes, wird dann als ihr Feature Vektoren interpretiert.
 
-Für das nachfolgende Clustering wurde der Name der Ziffer als Label mit dem sich ergebenden Featurevektor aus der Kaskade verknüpft. Durch den Mittelwert der jeweiligen Dimension, wurde der Mittelpunkt des jeweiligen Ziffernclusters ermittelt.
-Mit einem zweiten gelabelten Datenset von 1000 Ziffern des MNIST-Sets, welches nicht Bestandteil des Trainings war, wurde nun der neue Ergebnisvektor mittels euklidischer Distanz zu den jeweiligen Clustermittelpunkten abgeglichen.
-Jede Ziffer wurde ihrem nächstgelegenen Cluster zugeordnet und anschließend überprüft, ob dieses Cluster dem tatsächlichen Label der Ziffer entspricht.
+Für das nachfolgende Clustering wurde der jeweilige Ziffername der Zahl mit dem sich ergebenden Featurevektor aus der Kaskade verknüpft. Durch den Mittelwert, der jeweiligen Dimension wurde der Mittelpunkt des jeweiligen Ziffernclusters ermittelt.
+Mit einem zweiten gelabelten Datenset von 1000 Ziffern des MNIST-Sets, welches nicht Bestandteil des Trainings war, wurde nun der neue Ergebnisvektor mittels euklidischer Distanz zu den jeweiligen Clustermittelpunkten abgeglichen, ob sich die jeweilige Ziffer in dem dazugehörigen Cluster befand.
+
+\textit{Test 1:}
+\begin{itemize}
+\item Trainingset
+    \begin{itemize}
+        \item Größe: 1000
+        \item Ziffern: 0-9 je 100
+    \end{itemize}
+\item Testset
+    \begin{itemize}
+        \item Größe: 1000
+        \item Ziffern: 0-9 je 100
+    \end{itemize}
+\item Einstellungen
+    \begin{itemize}
+        \item CRBM1
+            \begin{itemize}
+                \item Input : $\cdot 32 \cdot 32$ ($28 \cdot  28$ + padding = 2) 
+                \item Anzahl der Feature-Maps: 15
+                \item Kernelgröße - $5 \cdot 5$
+                \item Epochen: 20
+                \item Learning rate - 0.01
+            \end{itemize}
+        \item Pooling1
+            \begin{itemize}
+                \item Typ - Max Pooling
+                \item Größe - $4 \cdot 4$
+            \end{itemize}
+        \item CRBM2
+            \begin{itemize}
+                \item Input : $\cdot 32 \cdot 32$ ($28 \cdot  28$ + padding = 2) 
+                \item Anzahl der Feature-Maps: 15
+                \item Kernelgröße - $5 \cdot 5$
+                \item Epochen: 20
+                \item Learning rate - 0.01
+            \end{itemize}
+        \item Pooling2
+            \begin{itemize}
+                \item Typ - Max Pooling
+                \item Größe - $3 \cdot 3$
+            \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\textit{Ergebnis 1:}
+\begin{itemize}
+    \item Mean Rank: 0.83027923
+    \item Wrong: 264 / 1000, Error: 0.264
+    \item Right: 736 / 1000, OverallCorrectRate: 0.736
+\end{itemize}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\textbf{X} & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} & \textbf{7} & \textbf{8} & \textbf{9} \\ \hline
+\textbf{0} & 84 & 0 & 1 & 0 & 1 & 4 & 3 & 2 & 3 & 2 \\ 
+\textbf{1} & 0 & 96 & 0 & 0 & 0 & 2 & 0 & 1 & 1 & 0 \\ 
+\textbf{2} & 1 & 10 & 70 & 1 & 0 & 1 & 2 & 6 & 7 & 2 \\
+\textbf{3} & 2 & 2 & 1 & 75 & 0 & 8 & 0 & 6 & 2 & 4 \\ 
+\textbf{4} & 0 & 1 & 3 & 1 & 70 & 2 & 8 & 2 & 1 & 12 \\
+\textbf{5} & 5 & 11 & 0 & 13 & 2 & 46 & 8 & 1 & 7 & 7 \\ 
+\textbf{6} & 3 & 4 & 1 & 0 & 10 & 6 & 75 & 1 & 0 & 0 \\ 
+\textbf{7} & 1 & 5 & 5 & 0 & 0 & 1 & 0 & 86 & 0 & 2 \\ 
+\textbf{8} & 0 & 7 & 4 & 9 & 2 & 7 & 3 & 0 & 65 & 3 \\ 
+\textbf{9} & 3 & 5 & 2 & 2 & 6 & 3	 & 3 & 4 & 3 & 69 \\ 
+\end{tabular}
